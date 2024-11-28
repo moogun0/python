@@ -1,0 +1,63 @@
+import csv
+import matplotlib.pyplot as plt
+
+# CSV 파일 읽기
+file_old ="old.csv"
+file_tp = "tp.csv"
+
+dates_old = [] #년도
+temps_old = [] #명수
+
+dates_tp = [] # 년도
+temps_tp = [] # 명수
+
+with open(file_old,mode='r') as old :
+    reader = csv.reader(old)
+
+    header = next(reader)
+    
+    for row in reader :
+        year = row[0] # 년도 추출
+        count = row[1].replace(",","")  # 명수 추출
+        # 데이터 검증
+
+        # 데이터 유효성
+        if year.isdigit() and count.isdigit():
+            dates_old.append(int(year))
+            temps_old.append(int(count))
+        else:
+            print(f"Skipping invalid row: {row}")
+            
+# 데이터 확인
+print("Dates:", dates_old)
+print("Temps:", temps_old)
+
+with open(file_tp,mode='r') as tp :
+    top = csv.reader(tp)
+
+    header = next(top)
+    
+    for row in top :
+        year1 = row[0] # 년도 추출
+        count1 = row[1].replace(",","")  # 명수 추출
+        # 데이터 검증
+
+        # 데이터 유효성
+        if year1.isdigit() and count1.isdigit():
+            dates_tp.append(int(year1))
+            temps_tp.append(int(count1))
+        else:
+            print(f"Skipping invalid row: {row}")
+            
+# 데이터 확인
+print("Dates1:", dates_tp)
+print("Temps1:", temps_tp)
+
+
+plt.plot(dates_old, temps_old, dates_tp, temps_tp, marker='o', color='r')
+plt.title("Population Growth Over Years")
+plt.xlabel("Year", fontsize=10)
+plt.ylabel("Population Count", fontsize=10)
+plt.grid(True)
+plt.show()
+       
